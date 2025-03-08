@@ -36,7 +36,7 @@ export const EmailForm: React.FC<EmailFormProps> = ({ onSubmit, onSendNow, isLoa
         <input
           type="email"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2"
           value={formData.recipient}
           onChange={(e) => setFormData({ ...formData, recipient: e.target.value })}
         />
@@ -47,7 +47,7 @@ export const EmailForm: React.FC<EmailFormProps> = ({ onSubmit, onSendNow, isLoa
         <input
           type="text"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           value={formData.subject}
           onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
         />
@@ -59,7 +59,7 @@ export const EmailForm: React.FC<EmailFormProps> = ({ onSubmit, onSendNow, isLoa
           <input
             type="datetime-local"
             required
-            className="block w-full rounded-md border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500"
+            className="p-2 block w-full rounded-md border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500"
             value={formData.schedule_time}
             onChange={(e) => setFormData({ ...formData, schedule_time: e.target.value })}
           />
@@ -74,7 +74,7 @@ export const EmailForm: React.FC<EmailFormProps> = ({ onSubmit, onSendNow, isLoa
         <textarea
           required
           rows={4}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           value={formData.content}
           onChange={(e) => setFormData({ ...formData, content: e.target.value })}
         />

@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const emailRoutes = require('./routes/emailRoutes');
+const worker = require('./worker');
 
 const app = express();
 const PORT = process.env.PORT || 5000;

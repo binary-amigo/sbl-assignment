@@ -1,31 +1,30 @@
 require('dotenv').config();
 const { Worker } = require('bullmq');
-const { Resend } = require('resend');
 const pool = require('./db');
-const redis = require('./redis');
+const IORedis = require('ioredis');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const email = require('./email');
+const connection = new IORedis({maxRetriesPerRequest: null});
 
-const emailWorker = new Worker('emailQueue', async job => {
+const emailWorker = new Worker('emailQueue', async (job) => {
+    console.log(`📩 Processing job: ID ${job.id}`);
+
     const { recipient, subject, content } = job.data;
 
     try {
-        await resend.emails.send({
-            from: process.env.EMAIL_FROM,
-            to: recipient,
-            subject,
-            text: content,
-        });
+        await email.sendEmail(subject, recipient, content);
 
         await pool.query('UPDATE emails SET status = $1 WHERE recipient = $2 AND subject = $3', ['sent', recipient, subject]);
 
-        console.log(`Email sent to ${recipient}`);
+        console.log(`✅ Email sent to ${recipient}`);
     } catch (error) {
-        console.error(`Failed to send email to ${recipient}`, error);
+        console.error(`❌ Failed to send email to ${recipient}`, error);
+        throw error;  // Ensures the job is marked as failed and retried
     }
-}, { connection: redis });
+}, { connection});  // Use the same Redis connection
 
-console.log('Email worker started...');
+// ✅ Fix: Ensure correct event listeners
+emailWorker.on('error', (err) => console.error('🚨 Worker error:', err));
+emailWorker.on('completed', (job) => console.log(`🎉 Job completed: ID ${job.id}`));
 
-module.exports = emailWorker;
-
+console.log('🚀 Email worker started...');
