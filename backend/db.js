@@ -23,7 +23,7 @@ pool.connect()
               id SERIAL PRIMARY KEY,
               recipient TEXT NOT NULL,
               subject TEXT NOT NULL,
-              content TEXT NOT NULL,
+              body TEXT NOT NULL,
               status TEXT NOT NULL CHECK (status IN ('sent', 'scheduled')),
               schedule_time TIMESTAMP DEFAULT NULL,
               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
