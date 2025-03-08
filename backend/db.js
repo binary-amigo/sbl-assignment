@@ -21,9 +21,9 @@ pool.connect()
           if (!exists) {
             return client.query(`CREATE TABLE emails (
               id SERIAL PRIMARY KEY,
-              to_email TEXT NOT NULL,
+              recipient TEXT NOT NULL,
               subject TEXT NOT NULL,
-              body TEXT NOT NULL,
+              content TEXT NOT NULL,
               status TEXT NOT NULL CHECK (status IN ('sent', 'scheduled')),
               schedule_time TIMESTAMP DEFAULT NULL,
               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
