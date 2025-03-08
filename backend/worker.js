@@ -4,7 +4,7 @@ const pool = require('./db');
 const IORedis = require('ioredis');
 
 const email = require('./email');
-const connection = new IORedis({maxRetriesPerRequest: null});
+const connection = new IORedis(process.env.REDIS_URL, {maxRetriesPerRequest: null});
 
 const emailWorker = new Worker('emailQueue', async (job) => {
     console.log(`📩 Processing job: ID ${job.id}`);
