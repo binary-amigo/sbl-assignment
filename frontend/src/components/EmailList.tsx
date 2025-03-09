@@ -40,7 +40,10 @@ export const EmailList: React.FC<EmailListProps> = ({ emails }) => {
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-500">
-                {email.schedule_time ? format(new Date(email.schedule_time), 'MMM d, yyyy HH:mm') : 'Not scheduled'}
+                {email.schedule_time 
+  ? format(new Date(email.schedule_time), "MMM d, yyyy HH:mm 'UTC'") 
+  : "Not scheduled"}
+
               </span>
               {getStatusIcon(email.status)}
             </div>
